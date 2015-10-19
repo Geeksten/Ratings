@@ -31,20 +31,21 @@ class User(db.Model):
 
 # Put your Movie and Rating model classes here.
 
-class Movie(db.Model):
+class Movie(db.Model): #create an instance of this class which = Movie 
+#when we say print it uses the repr function. 
     """Movies available for rating"""
 
     __tablename__ = "movies"
 
     movie_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    title = db.Column(db.String(64), nullable=False)
-    released_at = db.Column(db.Datetime(4), nullable=False)
-    imdb_url = db.Column(db.String(64), nullable=False)
+    title = db.Column(db.String(80), nullable=False)
+    released_at = db.Column(db.DateTime, nullable=False) #datetime any date or time in this field
+    imdb_url = db.Column(db.String(200), nullable=False)
 
     def __repr__(self):
         """Provide helpful information about the movie."""
 
-        return "<Movie movie_id=%s title=%s released_at=%s imdb_url=%s" %(self.movie_id, 
+        return "<Movie movie_id=%s title=%s released_at=%s imdb_url=%s>" %(self.movie_id, 
                                                                             self.title,
                                                                             self.released_at,
                                                                             self.imdb_url)
@@ -55,17 +56,18 @@ class Rating(db.Model):
     __tablename__="ratings"
 
     rating_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    movie_id = db.Column(db.Integer(64), nullable=False)
+    movie_id = db.Column(db.Integer, nullable=False)
     user_id = db.Column(db.Integer, nullable =False)
     score = db.Column(db.Integer, nullable=False)
 
     def __repr__(self):
         """Provide helpulful information about the ratings a user gave."""
         
-        return "<Rating rating_id=%s movie_id=%s user_id=%s score=%s" % (self.rating_id, 
+        return "<Rating rating_id=%s movie_id=%s user_id=%s score=%s>" % (self.rating_id, 
                                                                         self.movie_id,
                                                                         self.user_id,
                                                                         self.score)
+        #syntax we use to show that it is a rating object
 
 ##############################################################################
 # Helper functions
