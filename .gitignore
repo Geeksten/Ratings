@@ -1,3 +1,4 @@
 env/
 *.pyc
 model.pyc
+*.db

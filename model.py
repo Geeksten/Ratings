@@ -39,8 +39,8 @@ class Movie(db.Model): #create an instance of this class which = Movie
 
     movie_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     title = db.Column(db.String(80), nullable=False)
-    released_at = db.Column(db.DateTime, nullable=False) #datetime any date or time in this field
-    imdb_url = db.Column(db.String(200), nullable=False)
+    released_at = db.Column(db.DateTime, nullable=True) #datetime any date or time in this field
+    imdb_url = db.Column(db.String(200), nullable=True)
 
     def __repr__(self):
         """Provide helpful information about the movie."""
@@ -90,3 +90,5 @@ if __name__ == "__main__":
     connect_to_db(app)
     print "Connected to DB."
 #need a new commit
+
+#hello 

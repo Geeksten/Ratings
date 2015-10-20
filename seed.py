@@ -85,15 +85,17 @@ def load_ratings():
     # Read u.data file and insert data
     for row in open("seed_data/u.data"):
         row = row.rstrip()
-        rating_id, movie_id, user_id, score = row.split("\t")
+        user_id, movie_id, score, timestamp = row.split("\t")
 
         user_id = int(user_id)
         movie_id = int(movie_id)
         score = int(score)
 
-        rating = Rating(rating_id=rating_id, 
-                        movie_id=movie_id, user_id=user_id, score=score)
-
+        #from rating class take the movie_id and make it equal to the movie_id 
+        #from the for loop above. We are calling it to make an instance of the rating
+        #class
+        rating = Rating(movie_id=movie_id, user_id=user_id, score=score)
+       
         #We need to add to the session or it won't ever be stored
         db.session.add(rating)
 
