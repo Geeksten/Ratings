@@ -56,10 +56,38 @@ class Rating(db.Model):
     __tablename__="ratings"
 
     rating_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    movie_id = db.Column(db.Integer, nullable=False)
-    user_id = db.Column(db.Integer, nullable =False)
-    score = db.Column(db.Integer, nullable=False)
+    #The column below is still an integer, but we’re also declaring it to be a ForeignKey,
+    #which is just a fancy way of saying it references another column in another table. 
+    #The parameter passed to ForeignKey() should be a string in the format of “table.column_name”. 
+    #Here, we’re saying that the movie_id column of the ratings table refers to the movie_id column 
+    #of the movie table:
+    movie_id = db.Column(db.Integer, db.ForeignKey('movies.movie_id'))
+    #The column below is still an integer, but we’re also declaring it to be a ForeignKey,
+    #which is just a fancy way of saying it references another column in another table. 
+    #The parameter passed to ForeignKey() should be a string in the format of “table.column_name”. 
+    #Here, we’re saying that the user_id column of the ratings table refers to the user_id column 
+    #of the users table:
 
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+
+    score = db.Column(db.Integer)
+
+    #Define relationship to user:
+    #This line establishes a relationship between the Rating and User objects, along with backref. 
+    #The relationship adds an attribute on ratings objects called user. This value of this attribute is the same 
+    #object as if you had queried the database directly for that user.On a user object, there is an attribute named ratings. 
+    #This attribute is a list of all the ratings associated with that user, simultaneously queried from the database.
+    #The relationship attribute defined on the Rating class just tells SQLAlchemy how it should construct the JOIN clause of 
+    #its SELECT statement. It then takes all the results and turns them into the correct objects.
+    #Note that these relationship attributes don’t change the actual tables – the data stored in the ratings table is still the 
+    #integer movie_id and user_id fields, for example. These movie and user relationship attributes 
+    #added to the Rating class provide a quick and convenient way to get to the related movie and user objects, respectively.
+    user = db.relationship("User",
+                           backref=db.backref("ratings", order_by=rating_id))
+
+    #Define relationship to movie
+    movie = db.relationship("Movie",
+                            backref=db.backref("ratings", order_by=rating_id))
     def __repr__(self):
         """Provide helpulful information about the ratings a user gave."""
         
@@ -89,6 +117,4 @@ if __name__ == "__main__":
     from server import app
     connect_to_db(app)
     print "Connected to DB."
-#need a new commit
-
-#hello 
+ 
