@@ -102,7 +102,7 @@ def load_ratings():
     #Once we're done, we should commit our work
     db.session.commit()
 
-
+def make_new_user
 
 
 
@@ -117,6 +117,6 @@ if __name__ == "__main__":
     db.create_all()
 
     # Import different types of data
-    load_users()
-    load_movies()
-    load_ratings()
+    #load_users()
+    #load_movies()
+    #load_ratings()
