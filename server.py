@@ -44,31 +44,51 @@ def user_confirmation():
 
     email = request.form['email']
     password = request.form['password']
-    user_added_to_db = False
 
 
-    print email, password
+    user = User.query.filter_by(email=email).first()
 
-    user_name = User.query.filter_by(email=email).first()
+    if user:
+        flash("You're already a user. Please log in.")
+        return redirect("/login")
 
-    print user_name
-    type(user_name)
-
-
-    if (user_name==None):
+    else:
         user = User(email=email, password=password)
 
         db.session.add(user)
-      
         db.session.commit()
-        user_added_to_db = True
-    #-----------
 
-    user = User.query.filter_by(email=email).first()
-    user_id = user.user_id
+        return redirect("/users/%s" % user.user_id)
 
-        #we could've used flash to let them know that they were already registered 
-    return render_template("user_confirmation.html", user_name=user_name, user_id=user_id, user_added_to_db= user_added_to_db)
+@app.route("/login")
+def  login_form():
+    """Have users login using email and password"""
+
+    return render_template("login_form.html")
+
+
+@app.route("/login_confirmation", methods=["POST"])
+def login_confirmation():
+    """Inform users that they logged in succesfully and provide a link to their profile"""
+
+    email = request.form['email']
+    password = request.form['password']
+
+    user = User.query.filter_by(email=email, password=password).first()
+
+    if user:
+        session['user_id']=user.user_id
+        return redirect("/users/%s" % user.user_id)
+    else:
+        flash("Incorrect username or password")
+        return redirect("/login")
+    
+
+@app.route("/users/<int:user_id>")
+def show_user_profile(user_id):
+    """"Return page showing the details of a given user."""
+
+    return render_template("user_detail.html", display_user=user_id)
 
 
 if __name__ == "__main__":

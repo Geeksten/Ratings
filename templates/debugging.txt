@@ -1,0 +1,46 @@
+  #The column below is still an integer, but we’re also declaring it to be a ForeignKey,
+    #which is just a fancy way of saying it references another column in another table.
+    #The parameter passed to ForeignKey should be a string in the format of “table.column name”.
+    #Here, we’re saying that the movie id column of the ratings table refers to the movie id column
+    #of the movie table:
+
+     #The column below is still an integer, but we’re also declaring it to be a ForeignKey,
+    #which is just a fancy way of saying it references another column in another table.
+    #The parameter passed to ForeignKey() should be a string in the format of “table.column_name”.
+    #Here, we’re saying that the user_id column of the ratings table refers to the user_id column
+    #of the users table:
+
+
+    #Define relationship to user:
+    #This line establishes a relationship between the Rating and User objects, along with backref.
+    #The relationship adds an attribute on ratings objects called user. This value of this attribute is the same
+    #object as if you had queried the database directly for that user.On a user object, there is an attribute named ratings.
+    #This attribute is a list of all the ratings associated with that user, simultaneously queried from the database.
+    #The relationship attribute defined on the Rating class just tells SQLAlchemy how it should construct the JOIN clause of
+    #its SELECT statement. It then takes all the results and turns them into the correct objects
+    #Note that these relationship attributes don’t change the actual tables – the data stored in the ratings table is still the 
+    #integer movie_id and user_id fields, for example. These movie and user relationship attributes
+    #added to the Rating class provide a quick and convenient way to get to the related movie and user objects, respectively.
+    #backref- we can use the attributes of rating and user on both. Allows us to jump from users to ratings and back.
+    #once we have an object we can use the attributes of both rating users.
+
+
+
+      
+   <!--  <p>Email: {{email}}</p>
+    <p>password: {{ password}}</p>
+ -->
+   <!--  <a href="http://localhost:5000/student?github={{ github }}">Student Page</a> -->
+      <!-- we can redirect them to their profile--> 
+
+
+##alternative way of using flash messages in jina 
+      {% for message in get_flashed_messages() %}
+    {{ message }}
+vs 
+
+  {% with messages = get_flashed_messages() %}
+      {% for message in messages %}
+          <div class="alert alert-warning">{{ message }}</div>
+      {% endfor %}
+  {% endwith %}
