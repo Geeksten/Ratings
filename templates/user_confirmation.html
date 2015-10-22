@@ -1,9 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
 
+  {% if user_added_to_db %}
     <h2>You registered successfully</h2>
-  
-      
+  {% else %}
+    <h2> You are already a user, please sign in: </h2> 
+  {% endif %}
+    
+    <a href="http://localhost:5000/users/{{ user_id }}">User Profile Page</a>
+      <!-- we can redirect them to their profile--> 
     
 
 {% endblock %}

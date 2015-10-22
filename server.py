@@ -44,6 +44,8 @@ def user_confirmation():
 
     email = request.form['email']
     password = request.form['password']
+    user_added_to_db = False
+
 
     print email, password
 
@@ -59,10 +61,14 @@ def user_confirmation():
         db.session.add(user)
       
         db.session.commit()
-    else: 
-        print "You are already a user please sign in."
+        user_added_to_db = True
+    #-----------
 
-    return render_template("user_confirmation.html")
+    user = User.query.filter_by(email=email).first()
+    user_id = user.user_id
+
+        #we could've used flash to let them know that they were already registered 
+    return render_template("user_confirmation.html", user_name=user_name, user_id=user_id, user_added_to_db= user_added_to_db)
 
 
 if __name__ == "__main__":
