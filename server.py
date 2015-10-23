@@ -30,6 +30,7 @@ def user_list():
     """Show list of users."""
 
     users = User.query.all()
+    
     return render_template("user_list.html", users=users)
 
 @app.route("/new_user")
@@ -78,6 +79,7 @@ def login_confirmation():
 
     if user:
         session['user_id']=user.user_id
+        # return redirect("/users/<int:user.user_id>")
         return redirect("/users/%s" % user.user_id)
     else:
         flash("Incorrect username or password")
@@ -88,7 +90,12 @@ def login_confirmation():
 def show_user_profile(user_id):
     """"Return page showing the details of a given user."""
 
-    return render_template("user_detail.html", display_user=user_id)
+    user = User.query.filter_by(user_id=user_id).one()
+    rating = Rating.query.filter_by(user_id=user_id).all()
+
+    
+    return render_template("user_detail.html", user=user, rating=rating)
+  
 
 
 if __name__ == "__main__":

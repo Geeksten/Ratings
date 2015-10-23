@@ -1,11 +1,21 @@
 {% extends 'base.html' %}
+{% block content %}
 
-{% block body %}
+    <h2>User Profile</h2>
 
-    <h2>{{ display_user.user_id}}</h2>
-
-     <h3>User Profile</h3>
+  
+         Email:{{ user.email }} <br><br>
+         User ID:({{ user.user_id }}) <br><br>
+         Age: {{user.age}} <br><br>
+         Zipcode: {{user.zipcode}}<br><br>
  
-   
+ {% if rating %}
+ 
+    {% for rating in ratings %}
 
+         Movies Rated: {{rating.user_id}}
+    {% endfor %}
+    {% else %}
+     You have no ratings. 
+  {% endif %}
 {% endblock %}
